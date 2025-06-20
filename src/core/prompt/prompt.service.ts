@@ -1,13 +1,13 @@
 import inquirer from "inquirer";
-import { PromptType } from "./prompt.type";
+import { PromptResult, PromptType } from "./prompt.type";
 
 
 
 export class PromptService {
-    public async input<T>(message: string, type: PromptType) {
-        const { result } = await inquirer.prompt<{ result: T }>([
+    public async prompt<T extends PromptType>(message: string, type: T): Promise<PromptResult<T>> {
+        const { result } = await inquirer.prompt<{ result: PromptResult<T> }>([
             {
-                type: 'input',
+                type: type,
                 name: 'result',
                 message: message
             }
